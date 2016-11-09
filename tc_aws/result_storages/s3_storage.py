@@ -52,8 +52,10 @@ class Storage(AwsStorage, BaseStorage):
 
         def return_result(key):
             if key is None or self._get_error(key) or self.is_expired(key):
+                logger.info("cache hit: 0")
                 callback(None)
             else:
+                logger.info("cache hit: 1")
                 result = ResultStorageResult()
                 result.buffer     = key['Body'].read()
                 result.successful = True
